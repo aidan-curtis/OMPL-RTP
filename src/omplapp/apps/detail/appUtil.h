@@ -12,7 +12,7 @@
 
 #include <ompl/base/ProblemDefinition.h>
 #include <ompl/control/planners/syclop/Decomposition.h>
-#include "omplapp/geometry/RigidBodyGeometry.h"
+#include "../../geometry/RigidBodyGeometry.h"
 
 namespace ompl
 {

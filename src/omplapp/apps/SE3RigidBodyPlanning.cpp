@@ -10,7 +10,7 @@
 
 /* Author: Ioan Sucan */
 
-#include "omplapp/apps/SE3RigidBodyPlanning.h"
+#include "SE3RigidBodyPlanning.h"
 
 ompl::base::ScopedState<> ompl::app::SE3RigidBodyPlanning::getDefaultStartState() const
 {

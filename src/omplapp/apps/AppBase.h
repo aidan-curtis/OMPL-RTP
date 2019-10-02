@@ -13,10 +13,10 @@
 #ifndef OMPLAPP_APP_BASE_
 #define OMPLAPP_APP_BASE_
 
-#include "omplapp/geometry/RigidBodyGeometry.h"
+#include "../geometry/RigidBodyGeometry.h"
 #include <ompl/geometric/SimpleSetup.h>
 #include <ompl/control/SimpleSetup.h>
-#include "omplapp/apps/detail/appUtil.h"
+#include "detail/appUtil.h"
 
 namespace ompl
 {

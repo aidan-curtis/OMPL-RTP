@@ -1,6 +1,6 @@
 CXX_FLAGS=-std=c++11 -O2 -Wall -Wextra
 
-INCLUDE_FLAGS=`pkg-config --cflags ompl eigen3`
+INCLUDE_FLAGS=`pkg-config --cflags ompl eigen3 assimp`
 # Linker options
 LD_FLAGS=`pkg-config --libs ompl`
 

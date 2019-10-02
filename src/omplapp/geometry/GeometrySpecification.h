@@ -13,7 +13,7 @@
 #ifndef OMPLAPP_GEOMETRY_GEOMETRY_SPECIFICATION_
 #define OMPLAPP_GEOMETRY_GEOMETRY_SPECIFICATION_
 
-#include "omplapp/config.h"
+#include "../config.h"
 #include <assimp/scene.h>
 #include <vector>
 #include <functional>

@@ -10,11 +10,11 @@
 #include <ompl/geometric/planners/rrt/RRT.h>
 #include <ompl/tools/benchmark/Benchmark.h>
 
-#include "config.h"
+#include "omplapp/config.h"
 
 
 // Your random tree planner
-#include "SE3RigidBodyPlanning.h"
+#include "omplapp/apps/SE3RigidBodyPlanning.h"
 #include "RTP.h"
 
 using namespace ompl;

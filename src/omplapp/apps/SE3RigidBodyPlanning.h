@@ -13,7 +13,7 @@
 #ifndef OMPLAPP_SE3_RIGID_BODY_PLANNING_
 #define OMPLAPP_SE3_RIGID_BODY_PLANNING_
 
-#include "omplapp/apps/AppBase.h"
+#include "AppBase.h"
 #include <ompl/base/spaces/SE3StateSpace.h>
 
 namespace ompl

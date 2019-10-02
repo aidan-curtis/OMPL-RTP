@@ -30,39 +30,39 @@ namespace ompl
 			void clear() override;
 
 
-            /** \brief Set the goal bias
+			/** \brief Set the goal bias
 
-                In the process of randomly selecting states in
-                the state space to attempt to go towards, the
-                algorithm may in fact choose the actual goal state, if
-                it knows it, with some probability. This probability
-                is a real number between 0.0 and 1.0; its value should
-                usually be around 0.05 and should not be too large. It
-                is probably a good idea to use the default value. */
-            void setGoalBias(double goalBias)
-            {
-                goalBias_ = goalBias;
-            }
+				In the process of randomly selecting states in
+				the state space to attempt to go towards, the
+				algorithm may in fact choose the actual goal state, if
+				it knows it, with some probability. This probability
+				is a real number between 0.0 and 1.0; its value should
+				usually be around 0.05 and should not be too large. It
+				is probably a good idea to use the default value. */
+			void setGoalBias(double goalBias)
+			{
+				goalBias_ = goalBias;
+			}
 
-            /** \brief Get the goal bias the planner is using */
-            double getGoalBias() const
-            {
-                return goalBias_;
-            }
+			/** \brief Get the goal bias the planner is using */
+			double getGoalBias() const
+			{
+				return goalBias_;
+			}
 
-            /** \brief Return true if the intermediate states generated along motions are to be added to the tree itself
-             */
-            bool getIntermediateStates() const
-            {
-                return addIntermediateStates_;
-            }
+			/** \brief Return true if the intermediate states generated along motions are to be added to the tree itself
+			 */
+			bool getIntermediateStates() const
+			{
+				return addIntermediateStates_;
+			}
 
-            /** \brief Specify whether the intermediate states generated along motions are to be added to the tree
-             * itself */
-            void setIntermediateStates(bool addIntermediateStates)
-            {
-                addIntermediateStates_ = addIntermediateStates;
-            }
+			/** \brief Specify whether the intermediate states generated along motions are to be added to the tree
+			 * itself */
+			void setIntermediateStates(bool addIntermediateStates)
+			{
+				addIntermediateStates_ = addIntermediateStates;
+			}
 
 			void setRange(double distance)
 			{

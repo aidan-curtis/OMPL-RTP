@@ -10,7 +10,7 @@
 #include <ompl/geometric/planners/rrt/RRT.h>
 #include <ompl/tools/benchmark/Benchmark.h>
 
-#include <omplapp/config.h>
+#include "config.h"
 
 
 // Your random tree planner

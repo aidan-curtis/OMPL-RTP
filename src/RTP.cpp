@@ -14,25 +14,10 @@ ompl::geometric::RTP::RTP(const ompl::base::SpaceInformationPtr &si) : ompl::bas
 	specs_.approximateSolutions = true;
 	specs_.directed = true;
 
-	// Set the range the planner is supposed to use. (setRange())
-	// This parameter greatly influences the runtime of the algorithm. 
-	// It represents the maximum length of a motion to be added in the tree of motions.
 	Planner::declareParam<double>("range", this, &RTP::setRange, &RTP::getRange, "0.:1.:10000.");
 
-	// In the process of randomly selecting states in the state space to attempt to go towards, 
-	// the algorithm may in fact choose the actual goal state, if it knows it, 
-	// with some probability. This probability is a real number between 0.0 and 1.0; 
-	// its value should usually be around 0.05 and should not be too large. 
-	// It is probably a good idea to use the default value.
 	Planner::declareParam<double>("goal_bias", this, &RTP::setGoalBias, &RTP::getGoalBias, "0.:.05:1.");
 
-
-	// we don't need intermediate states
-
-	// Planner::declareParam<bool>("intermediate_states", this, &RTP::setIntermediateStates, &RTP::getIntermediateStates,
-	// 							"0,1");
-
-	// addIntermediateStates_ = addIntermediateStates;
 }
 
 ompl::geometric::RTP::~RTP() {
@@ -108,45 +93,14 @@ ompl::base::PlannerStatus ompl::geometric::RTP::solve(const ompl::base::PlannerT
 		Motion *nmotion = nn_->nearest(rmotion); // query for nmotion ("nearest motion") in the tree already
 		ompl::base::State *dstate = rstate;
 
-		/* find state to add */
-		double d = si_->distance(nmotion->state, rstate); // compute the distance b.t. nearest state and random state
-
-		// I don't think we need this
-		// if (d > maxDistance_)
-		// {
-		// 	si_->getStateSpace()->interpolate(nmotion->state, rstate, maxDistance_ / d, xstate); // truncation step for RRT ONLY!
-		// 	dstate = xstate;
-		// }
-
 		if (si_->checkMotion(nmotion->state, dstate)) // check if path between two states is valid (takes pointers to State objects)
 		{
-			// if (addIntermediateStates_)
-			// {
-			// 	std::vector<ompl::base::State *> states;
-			// 	const unsigned int count = si_->getStateSpace()->validSegmentCount(nmotion->state, dstate);
-
-			// 	if (si_->getMotionStates(nmotion->state, dstate, states, count, true, true))
-			// 		si_->freeState(states[0]);
-
-			// 	for (std::size_t i = 1; i < states.size(); ++i)
-			// 	{
-			// 		auto *motion = new Motion;
-			// 		motion->state = states[i];
-			// 		motion->parent = nmotion;
-			// 		nn_->add(motion);
-
-			// 		nmotion = motion;
-			// 	}
-			// }
-			// else
-			// {
 				auto *motion = new Motion(si_); // allocate memory for a state
 				si_->copyState(motion->state, dstate); // Copy random state into our new motion's state
 				motion->parent = nmotion; // Set the newly copied random state's parent as our nearest motion
 				nn_->add(motion); // Add the random state/motion to the tree
 
 				nmotion = motion; // The new nearest motion is the random one we just added
-			// }
 
 			double dist = 0.0;
 			bool sat = goal->isSatisfied(nmotion->state, &dist);

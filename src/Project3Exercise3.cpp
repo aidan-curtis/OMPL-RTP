@@ -62,7 +62,7 @@ void benchmarkCubicles()
 	cs[2] = 35;
 	setup.getStateSpace()->getDefaultProjection()->setCellSizes(cs);
 
-	runtime_limit = 10.0;
+	runtime_limit = 1.0;
 	memory_limit = 10000.0;  // set high because memory usage is not always estimated correctly
 	run_count = 500;
 

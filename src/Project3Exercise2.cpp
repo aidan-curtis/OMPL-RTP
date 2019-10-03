@@ -164,24 +164,34 @@ void planBox(const std::vector<Rectangle> &  obstacles )
 void makeEnvironment1(std::vector<Rectangle> &obstacles )
 {
 	// This obstacle is a single square
-	Rectangle obstacle;
+	Rectangle obstacle1;
 	obstacle.x = -0.5;
-	obstacle.y = -0.5;
-	obstacle.width = 1.0;
-	obstacle.height = 1.0;
-	obstacles.push_back(obstacle);
+	obstacle.y = -1;
+	obstacle.width = 0.2;
+	obstacle.height = 1.8;
+	obstacles.push_back(obstacle1);
+
+	Rectangle obstacle2;
+	obstacle.x = 0.5;
+	obstacle.y = -0.8;
+	obstacle.width = 0.2;
+	obstacle.height = 1.8;
+	obstacles.push_back(obstacle2);
 
 }
 
 void makeEnvironment2(std::vector<Rectangle> &obstacles )
 {
-	// This obstacle is a single square
-	Rectangle obstacle;
-	obstacle.x = -0.5;
-	obstacle.y = -0.5;
-	obstacle.width = 1.0;
-	obstacle.height = 1.0;
-	obstacles.push_back(obstacle);
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 3; j++){
+			Rectangle obstacle;
+			obstacle.x = 0.5*i-0.5;
+			obstacle.y = 0.5*j-0.5;
+			obstacle.width = 0.3;
+			obstacle.height = 0.3;
+			obstacles.push_back(obstacle);
+		}		
+	}
 }
 
 int main(int /* argc */, char ** /* argv */)

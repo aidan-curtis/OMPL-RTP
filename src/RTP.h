@@ -1,7 +1,7 @@
 ///////////////////////////////////////
 // COMP/ELEC/MECH 450/550
 // Project 3
-// Authors: FILL ME OUT!!
+// Authors: Aidan Curtis and Patrick Han
 //////////////////////////////////////
 
 #ifndef RANDOM_TREE_H
@@ -19,7 +19,7 @@ namespace ompl
 		{
 		public:
 			/** \brief Constructor */
-			RTP(const base::SpaceInformationPtr &si, bool addIntermediateStates = false);
+			RTP(const base::SpaceInformationPtr &si);
 
 			~RTP() override;
 
@@ -52,17 +52,17 @@ namespace ompl
 
 			/** \brief Return true if the intermediate states generated along motions are to be added to the tree itself
 			 */
-			bool getIntermediateStates() const
-			{
-				return addIntermediateStates_;
-			}
+			// bool getIntermediateStates() const
+			// {
+			// 	return addIntermediateStates_;
+			// }
 
 			/** \brief Specify whether the intermediate states generated along motions are to be added to the tree
 			 * itself */
-			void setIntermediateStates(bool addIntermediateStates)
-			{
-				addIntermediateStates_ = addIntermediateStates;
-			}
+			// void setIntermediateStates(bool addIntermediateStates)
+			// {
+			// 	addIntermediateStates_ = addIntermediateStates;
+			// }
 
 			void setRange(double distance)
 			{
@@ -93,7 +93,7 @@ namespace ompl
 
 				This only contains pointers to parent motions as we
 				only need to go backwards in the tree. */
-			class Motion
+			class Motion // A motion contains a current state and its parent motion in the tree, basically an edge in the graph
 			{
 			public:
 				Motion() = default;
@@ -135,7 +135,7 @@ namespace ompl
 			double maxDistance_{0.};
 
 			/** \brief Flag indicating whether intermediate states are added to the built tree of motions */
-			bool addIntermediateStates_;
+			// bool addIntermediateStates_;
 
 			/** \brief The random number generator */
 			RNG rng_;

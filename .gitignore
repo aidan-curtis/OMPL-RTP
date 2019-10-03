@@ -1,4 +1,6 @@
 *.o
 Project3Exercise2
 Project3Exercise3
+.vscode
+.txt
 ompl_ompl_*

@@ -8,7 +8,13 @@ from math import sin, cos
 # Draw some obstacles
 def plotObstacles(ax):
     # Drawing the unit square
-    ax.add_patch(patches.Polygon([(-0.5,0.5),(-0.5,-0.5),(0.5,-0.5),(0.5,0.5)], fill=True, color='0.20'))
+    side = 0.9
+    space_factor = 1.4
+    offset = -2
+    for i in range(3):
+        for j in range(3): 
+            if(not(i==0 and j==0) and not(i==2 and j==2)):   
+                ax.add_patch(patches.Polygon([(space_factor*i+offset,space_factor*j+offset),(space_factor*i+offset+side,space_factor*j+offset),(space_factor*i+offset+side,space_factor*j+offset+side),(space_factor*i+offset,space_factor*j+offset+side)], fill=True, color='0.20'))
 
 # Plot a path in R3 with a unit square obstacle centered at the origin
 def plotR2(path):

@@ -25,7 +25,6 @@
 
 // Use placeholder namespace for arguments to bound functions.
 using namespace std::placeholders;
-
 // This is our state validity checker for checking if our point robot is in collision
 bool isValidStatePoint(const ompl::base::State *state, const std::vector<Rectangle> &obstacles)
 {
@@ -60,6 +59,7 @@ bool isValidStateSquare(const ompl::base::State *state, double sideLength, const
 
 void planPoint(const std::vector<Rectangle> &obstacles )
 {
+	std::cout<<"Num obstacles inside plan "<<obstacles.size()<<std::endl;
 	auto r2 = std::make_shared<ompl::base::RealVectorStateSpace>(2);
 	ompl::base::RealVectorBounds bounds(2);
 	bounds.setLow(-2);  // x and y have a minimum of -2
@@ -106,6 +106,7 @@ void planPoint(const std::vector<Rectangle> &obstacles )
 
 void planBox(const std::vector<Rectangle> &  obstacles )
 {
+
 
 	ompl::base::StateSpacePtr se2;
 	auto r2 = std::make_shared<ompl::base::RealVectorStateSpace>(2);
@@ -163,33 +164,38 @@ void planBox(const std::vector<Rectangle> &  obstacles )
 
 void makeEnvironment1(std::vector<Rectangle> &obstacles )
 {
-	// This obstacle is a single square
 	Rectangle obstacle1;
-	obstacle.x = -0.5;
-	obstacle.y = -1;
-	obstacle.width = 0.2;
-	obstacle.height = 1.8;
+	obstacle1.x = -0.5;
+	obstacle1.y = -2;
+	obstacle1.width = 0.1;
+	obstacle1.height = 3.6;
 	obstacles.push_back(obstacle1);
 
 	Rectangle obstacle2;
-	obstacle.x = 0.5;
-	obstacle.y = -0.8;
-	obstacle.width = 0.2;
-	obstacle.height = 1.8;
+	obstacle2.x = 0.5;
+	obstacle2.y = -1.6;
+	obstacle2.width = 0.1;
+	obstacle2.height = 3.6;
 	obstacles.push_back(obstacle2);
 
+	std::cout<<"After making environment "<<obstacles.size()<<std::endl;
 }
 
 void makeEnvironment2(std::vector<Rectangle> &obstacles )
 {
-	for (int i = 0; i < 3; i++){
-		for (int j = 0; j < 3; j++){
-			Rectangle obstacle;
-			obstacle.x = 0.5*i-0.5;
-			obstacle.y = 0.5*j-0.5;
-			obstacle.width = 0.3;
-			obstacle.height = 0.3;
-			obstacles.push_back(obstacle);
+	float side = 0.9;
+	float space_factor = 1.4;
+	float offset = -2;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			if( !(i==0 && j==0) and !(i==2 && j==2) ){
+				Rectangle obstacle;
+				obstacle.x = space_factor * i + offset;
+				obstacle.y = space_factor * j + offset;
+				obstacle.width = side;
+				obstacle.height = side;
+				obstacles.push_back(obstacle);
+			}
 		}		
 	}
 }
@@ -211,8 +217,8 @@ int main(int /* argc */, char ** /* argv */)
 	do
 	{
 		std::cout << "In Environment: " << std::endl;
-		std::cout << " (1) TODO" << std::endl;
-		std::cout << " (2) TODO" << std::endl;
+		std::cout << " (1) Two Vertical Bars" << std::endl;
+		std::cout << " (2) Seven Squares Grid" << std::endl;
 
 		std::cin >> choice;
 	} while (choice < 1 || choice > 2);
@@ -220,7 +226,9 @@ int main(int /* argc */, char ** /* argv */)
 	switch (choice)
 	{
 		case 1:
+			std::cout<<"num obstacles before return "<<obstacles.size()<<std::endl;
 			makeEnvironment1(obstacles);
+			std::cout<<"num obstacles after return "<<obstacles.size()<<std::endl;
 			break;
 		case 2:
 			makeEnvironment2(obstacles);
@@ -233,6 +241,7 @@ int main(int /* argc */, char ** /* argv */)
 	switch (robot)
 	{
 		case 1:
+			std::cout<<"num obstacles before plan "<<obstacles.size()<<std::endl;
 			planPoint(obstacles);
 			break;
 		case 2:

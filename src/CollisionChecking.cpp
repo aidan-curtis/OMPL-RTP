@@ -11,7 +11,7 @@
 // Intersect the point (x,y) with the set of rectangles. If the point lies outside of all obstacles, return true.
 bool isValidPoint(double x, double y, const std::vector<Rectangle> &obstacles)
 {
-    for (int i = 0; i < obstacles.size(); i++){
+    for (int i = 0; i < (int)obstacles.size(); i++){
         // Simply check to see if the point is inside the rectangle
         if(x >= obstacles[i].x && x <= obstacles[i].x + obstacles[i].width && y >= obstacles[i].y && y <= obstacles[i].y + obstacles[i].height){
             return false;
@@ -29,7 +29,7 @@ float norm(double x1, double y1, double x2, double y2){
 // obstacles, return true.
 bool isValidCircle(double x, double y, double radius, const std::vector<Rectangle> &obstacles)
 {
-    for (int i = 0; i < obstacles.size(); i++) {
+    for (int i = 0; i < (int)obstacles.size(); i++) {
         if (obstacles[i].x - radius <= x && x <= obstacles[i].x + obstacles[i].width + radius && obstacles[i].y <= y && obstacles[i].y + obstacles[i].height >= y){
             return false; // Edge checks for circle intersection
         }
@@ -212,8 +212,8 @@ bool isValidSquare(double x, double y, double theta, double sideLength, const st
     ry2.push_back(s * (sideLength/2.0) + c * (sideLength/2.0) + y);
 
 
-    for (int i = 0; i < obstacles.size(); i++) {
-        for (int j = 0; j < rx1.size(); j++){
+    for (int i = 0; i < (int)obstacles.size(); i++) {
+        for (int j = 0; j < (int)rx1.size(); j++){
             // Get the 4 line segments of the obstacle and check intersections with the transformed object
             if(segments_intersect(rx1[j], ry1[j], rx2[j], ry2[j], obstacles[i].x, obstacles[i].y, obstacles[i].x+obstacles[i].width, obstacles[i].y)){
                 return false;

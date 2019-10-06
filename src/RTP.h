@@ -7,7 +7,7 @@
 #ifndef RANDOM_TREE_H
 #define RANDOM_TREE_H
 
-#include "ompl/datastructures/NearestNeighbors.h"
+// #include "ompl/datastructures/NearestNeighbors.h"
 #include "ompl/geometric/planners/PlannerIncludes.h"
 
 namespace ompl
@@ -74,15 +74,15 @@ namespace ompl
 				return maxDistance_;
 			}
 			
-			template <template <typename T> class NN>
-			void setNearestNeighbors()
-			{
-				if (nn_ && nn_->size() != 0)
-					OMPL_WARN("Calling setNearestNeighbors will clear all states.");
-				clear();
-				nn_ = std::make_shared<NN<Motion *>>();
-				setup();
-			}
+			// template <template <typename T> class NN>
+			// void setNearestNeighbors()
+			// {
+			// 	if (nn_ && nn_->size() != 0)
+			// 		OMPL_WARN("Calling setNearestNeighbors will clear all states.");
+			// 	clear();
+			// 	nn_ = std::make_shared<NN<Motion *>>();
+			// 	setup();
+			// }
 			
 			void setup() override;
 
@@ -124,8 +124,9 @@ namespace ompl
 			/** \brief State sampler */
 			base::StateSamplerPtr sampler_;
 
-			/** \brief A nearest-neighbors datastructure containing the tree of motions */
-			std::shared_ptr<NearestNeighbors<Motion *>> nn_;
+			/** \brief A simple vector-based datastructure containing the tree of motions */
+			// std::shared_ptr<NearestNeighbors<Motion *>> nn_;
+			std::vector<Motion *> allMotions; // Holds pointers to motions 
 
 			/** \brief The fraction of time the goal is picked as the state to expand towards (if such a state is
 			 * available) */

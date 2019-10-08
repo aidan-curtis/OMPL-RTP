@@ -1,7 +1,7 @@
 ///////////////////////////////////////
 // COMP/ELEC/MECH 450/550
 // Project 3
-// Authors: FILL ME OUT!!
+// Authors: Aidan Curtis and Patrick Han
 //////////////////////////////////////
 
 #include <iostream>
@@ -28,7 +28,6 @@ void postRunEvent(const base::PlannerPtr & /* planner */, tools::Benchmark::RunP
 
 void benchmarkCubicles()
 {
-	// TODO
 	app::SE3RigidBodyPlanning setup;
 	std::string benchmark_name;
 	double runtime_limit, memory_limit;
@@ -64,7 +63,7 @@ void benchmarkCubicles()
 
 	runtime_limit = 10.0;
 	memory_limit = 10000.0;  // set high because memory usage is not always estimated correctly
-	run_count = 500;
+	run_count = 50;
 
 
 	tools::Benchmark::Request request(runtime_limit, memory_limit, run_count);

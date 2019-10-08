@@ -44,21 +44,14 @@ ompl::base::PlannerStatus ompl::geometric::RTP::solve(const ompl::base::PlannerT
 	ompl::base::Goal *goal = pdef_->getGoal().get(); // Extract the goal state from our problem defintion (pdef pointer)
 	auto *goal_s = dynamic_cast<ompl::base::GoalSampleableRegion *>(goal); // Cast to a GoalSampleableRegion
 
-
 	// I think this basically builds the tree initially from input states
 	while (const ompl::base::State *st = pis_.nextStart()) //pis_ : planner input states, return next valid start state
 	{
 		auto *motion = new Motion(si_); // create a Motion ptr, initialize Motion with state information pointer
 		si_->copyState(motion->state, st); // Copy the st extracted into si_
 		allMotions.push_back(motion); // Add this motion to the tree
-		// nn_->add(motion); // Add this motion to the tree
 	}
 
-	// if (nn_->size() == 0) // If our tree is empty, that means we couldn't initialize any start states
-	// {
-	// 	OMPL_ERROR("%s: There are no valid initial states!", getName().c_str());
-	// 	return ompl::base::PlannerStatus::INVALID_START;
-	// }
 	if (allMotions.size() == 0) // If our tree is empty, that means we couldn't initialize any start states
 	{
 		OMPL_ERROR("%s: There are no valid initial states!", getName().c_str());
@@ -75,7 +68,6 @@ ompl::base::PlannerStatus ompl::geometric::RTP::solve(const ompl::base::PlannerT
 	double approxdif = std::numeric_limits<double>::infinity();
 	auto *rmotion = new Motion(si_);
 	ompl::base::State *rstate = rmotion->state; // rstate : holds our sampled random state
-	// ompl::base::State *xstate = si_->allocState();
 
 	while (!ptc)
 	{
@@ -85,30 +77,18 @@ ompl::base::PlannerStatus ompl::geometric::RTP::solve(const ompl::base::PlannerT
 		else
 			sampler_->sampleUniform(rstate); // Otherwise, sample a state uniformly
 
-
-
-
 		/* Choose a random state from the tree */
-		int randI = rand() % allMotions.size();
+		int randI = std::rand() % allMotions.size();
 		Motion *nmotion = allMotions[randI];
-
-		// Motion *nmotion = nn_->nearest(rmotion); // query for nmotion ("nearest motion") in the tree already
-		
-
-		// ompl::base::State *dstate = rstate;
-
-
-
 
 		if (si_->checkMotion(nmotion->state, rstate)) // check if path between two states is valid (takes pointers to State objects)
 		{
 				auto *motion = new Motion(si_); // allocate memory for a state
 				si_->copyState(motion->state, rstate); // Copy random state into our new motion's state
 				motion->parent = nmotion; // Set the newly copied random state's parent as our nearest motion
-				allMotions.push_back(motion);
-				// nn_->add(motion); // Add the random state/motion to the tree
+				allMotions.push_back(motion); // Push the new motion onto the tree
 
-				nmotion = motion; // The new nearest motion is the random one we just added
+				nmotion = motion;
 
 			double dist = 0.0;
 			bool sat = goal->isSatisfied(nmotion->state, &dist);
@@ -154,7 +134,6 @@ ompl::base::PlannerStatus ompl::geometric::RTP::solve(const ompl::base::PlannerT
 		solved = true;
 	}
 
-	// si_->freeState(xstate);
 	if (rmotion->state != nullptr)
 		si_->freeState(rmotion->state);
 	delete rmotion;
@@ -169,20 +148,12 @@ void ompl::geometric::RTP::setup()
 	Planner::setup();
 	tools::SelfConfig sc(si_, getName());
 	sc.configurePlannerRange(maxDistance_);
-
-	// if (!nn_)
-	// 	nn_.reset(tools::SelfConfig::getDefaultNearestNeighbors<Motion *>(this));
-	// nn_->setDistanceFunction([this](const Motion *a, const Motion *b) { return distanceFunction(a, b); });
 }
 
 
 void ompl::geometric::RTP::getPlannerData(ompl::base::PlannerData &data) const
 {
 	Planner::getPlannerData(data);
-
-	// std::vector<Motion *> motions;
-	// if (nn_)
-	// 	nn_->list(motions);
 
 	if (lastGoalMotion_ != nullptr)
 		data.addGoalVertex(ompl::base::PlannerDataVertex(lastGoalMotion_->state));

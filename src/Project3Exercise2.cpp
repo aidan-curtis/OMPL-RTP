@@ -1,7 +1,7 @@
 ///////////////////////////////////////
 // COMP/ELEC/MECH 450/550
 // Project 3
-// Authors: FILL ME OUT!!
+// Authors: Aidan Curtis and Patrick Han
 //////////////////////////////////////
 
 #include <iostream>

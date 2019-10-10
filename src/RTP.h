@@ -7,7 +7,6 @@
 #ifndef RANDOM_TREE_H
 #define RANDOM_TREE_H
 
-#include "ompl/datastructures/NearestNeighbors.h"
 #include "ompl/geometric/planners/PlannerIncludes.h"
 
 namespace ompl
@@ -50,20 +49,6 @@ namespace ompl
 				return goalBias_;
 			}
 
-			/** \brief Return true if the intermediate states generated along motions are to be added to the tree itself
-			 */
-			// bool getIntermediateStates() const
-			// {
-			// 	return addIntermediateStates_;
-			// }
-
-			/** \brief Specify whether the intermediate states generated along motions are to be added to the tree
-			 * itself */
-			// void setIntermediateStates(bool addIntermediateStates)
-			// {
-			// 	addIntermediateStates_ = addIntermediateStates;
-			// }
-
 			void setRange(double distance)
 			{
 				maxDistance_ = distance;
@@ -72,16 +57,6 @@ namespace ompl
 			double getRange() const
 			{
 				return maxDistance_;
-			}
-			
-			template <template <typename T> class NN>
-			void setNearestNeighbors()
-			{
-				if (nn_ && nn_->size() != 0)
-					OMPL_WARN("Calling setNearestNeighbors will clear all states.");
-				clear();
-				nn_ = std::make_shared<NN<Motion *>>();
-				setup();
 			}
 			
 			void setup() override;
@@ -124,8 +99,8 @@ namespace ompl
 			/** \brief State sampler */
 			base::StateSamplerPtr sampler_;
 
-			/** \brief A nearest-neighbors datastructure containing the tree of motions */
-			std::shared_ptr<NearestNeighbors<Motion *>> nn_;
+			/** \brief A simple vector-based datastructure containing the tree of motions */
+			std::vector<Motion *> allMotions; // Holds pointers to motions 
 
 			/** \brief The fraction of time the goal is picked as the state to expand towards (if such a state is
 			 * available) */
@@ -133,9 +108,6 @@ namespace ompl
 
 			/** \brief The maximum length of a motion to be added to a tree */
 			double maxDistance_{0.};
-
-			/** \brief Flag indicating whether intermediate states are added to the built tree of motions */
-			// bool addIntermediateStates_;
 
 			/** \brief The random number generator */
 			RNG rng_;
